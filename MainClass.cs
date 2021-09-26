@@ -4,12 +4,12 @@ namespace Project1OS {
     static class MainClass {
         public static void Main(String[] args) {
 
-            /*int[] p1bursts = { 6, 4 };
-            int[] p1io = { 10 };
-            int[] p2bursts = { 9, 6 };
-            int[] p2io = { 15 };
-            int[] p3bursts = { 3, 2 };
-            int[] p3io = { 5 };*/
+            int[] p1burstsSmall = { 6, 4 };
+            int[] p1ioSmall = { 10 };
+            int[] p2burstsSmall = { 9, 6 };
+            int[] p2ioSmall = { 15 };
+            int[] p3burstsSmall = { 3, 2 };
+            int[] p3ioSmall = { 5 };
 
             int[] p1bursts = { 5, 3, 5, 4, 6, 4, 3, 5 };
             int[] p1io = { 27, 31, 43, 18, 22, 26, 24 };
@@ -27,6 +27,10 @@ namespace Project1OS {
             int[] p7io = {  46, 41, 42, 21, 32, 19, 33 };
             int[] p8bursts = { 4, 5, 6, 14, 16, 6 };
             int[] p8io = { 14, 33, 51, 73, 87 };
+            Process p1objSmall = new Process(1, p1burstsSmall, p1ioSmall);
+            Process p2objSmall = new Process(2, p2burstsSmall, p2ioSmall);
+            Process p3objSmall = new Process(3, p3burstsSmall, p3ioSmall);
+
             Process p1obj = new Process(1, p1bursts, p1io);
             Process p2obj = new Process(2, p2bursts, p2io);
             Process p3obj = new Process(3, p3bursts, p3io);
@@ -35,6 +39,7 @@ namespace Project1OS {
             Process p6obj = new Process(6, p6bursts, p6io);
             Process p7obj = new Process(7, p7bursts, p7io);
             Process p8obj = new Process(8, p8bursts, p8io);
+
             FCFS firstcomefirstserve = new FCFS();
             firstcomefirstserve.AddProcess(p1obj);
             firstcomefirstserve.AddProcess(p2obj);
@@ -44,7 +49,13 @@ namespace Project1OS {
             firstcomefirstserve.AddProcess(p6obj);
             firstcomefirstserve.AddProcess(p7obj);
             firstcomefirstserve.AddProcess(p8obj);
-            firstcomefirstserve.BeginSequence();
+            //firstcomefirstserve.BeginSequence();
+
+            RR roundrobin = new RR(2);
+            roundrobin.AddProcess(p1objSmall);
+            roundrobin.AddProcess(p2objSmall);
+            roundrobin.AddProcess(p3objSmall);
+            roundrobin.BeginSequence();
         }
     }
 }

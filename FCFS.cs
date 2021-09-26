@@ -4,25 +4,9 @@ using System.Text;
 
 namespace Project1OS {
     class FCFS : Scheduler {
-        Process activeProcess;
-        int totalTime = 0;
-        public void AddProcess(Process process) {
-            readyQueue.Enqueue(process);
-        }
         public void BeginSequence() {
             RunProcesses();
             CalculateTimes();
-        }
-        public void CalculateTimes() {
-            Console.WriteLine("Tr times");
-            foreach (var process in waitingQueue) {
-                Console.WriteLine(process.processID + " : " + process.turnAroundTime);
-            }
-            Console.WriteLine("Wt times");
-            foreach (var process in waitingQueue) {
-                process.waitTime--;
-                Console.WriteLine(process.waitTime);
-            }
         }
         public void RunProcesses() {
 

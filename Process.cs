@@ -61,7 +61,10 @@ namespace Project1OS {
                 } else return false;
             }
             catch (Exception) {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Array size has been exceeded.");
+                Console.ResetColor();
                 return true;
             }
         }
@@ -92,17 +95,6 @@ namespace Project1OS {
                 io_times[arrPos]--;
                 if (io_times[arrPos] <= 0) {
                     io_times[arrPos] = -1;
-                }
-                if(arrPos == io_times.Length) {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("LINE MATCHES LENGTH");
-                    Console.ResetColor();
-                } else {
-                    Console.BackgroundColor = ConsoleColor.Blue;
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("Line did not match : " + arrPos);
-                    Console.ResetColor();
                 }
             }
             catch (Exception) {

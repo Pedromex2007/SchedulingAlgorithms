@@ -4,115 +4,93 @@ using System.Text;
 
 namespace Project1OS {
     class RR : Scheduler {
-        // Method to find the waiting time
-        // for all processes
-        public void FindWaitingTime(int[] processes,
-                 int n, int[] bt, int[] wt, int quantum) {
+        int orgTq;
+        int Tq { get; set;}
+        public RR(int timeQuantum) {
+            Tq = timeQuantum;
+            orgTq = timeQuantum;
+        }
 
-            // Make a copy of burst times bt[] to
-            // store remaining burst times.
-            int[] rem_bt = new int[n];
+        public void BeginSequence() {
+            RunProcesses();
+            CalculateTimes();
+        }
+        public void RunProcesses() {
 
-            for (int i = 0; i < n; i++)
-                rem_bt[i] = bt[i];
-
-            int t = 0; // Current time
-
-            // Keep traversing processes in round
-            // robin manner until all of them are
-            // not done.
             while (true) {
-                bool done = true;
-
-                // Traverse all processes one by
-                // one repeatedly
-                for (int i = 0; i < n; i++) {
-                    // If burst time of a process
-                    // is greater than 0 then only
-                    // need to process further
-                    if (rem_bt[i] > 0) {
-
-                        // There is a pending process
-                        done = false;
-
-                        if (rem_bt[i] > quantum) {
-                            // Increase the value of t i.e.
-                            // shows how much time a process
-                            // has been processed
-                            t += quantum;
-
-                            // Decrease the burst_time of
-                            // current process by quantum
-                            rem_bt[i] -= quantum;
-                        }
-
-                        // If burst time is smaller than
-                        // or equal to quantum. Last cycle
-                        // for this process
-                        else {
-
-                            // Increase the value of t i.e.
-                            // shows how much time a process
-                            // has been processed
-                            t = t + rem_bt[i];
-
-                            // Waiting time is current
-                            // time minus time used by
-                            // this process
-                            wt[i] = t - bt[i];
-
-                            // As the process gets fully
-                            // executed make its remaining
-                            // burst time = 0
-                            rem_bt[i] = 0;
-                        }
+                totalTime++;
+                if (activeProcess == null) {
+                    if (readyQueue.Count > 0) {
+                        activeProcess = readyQueue.Dequeue();
+                    }
+                    if (ioQueue.Count <= 0 && readyQueue.Count <= 0 && activeProcess == null) {
+                        break;
                     }
                 }
-
-                // If all processes are done
-                if (done == true)
-                    break;
+                RunBurstCycle();
+                RunIOCycle();
+                Console.WriteLine("Total time: " + totalTime);
+                //Console.WriteLine("Current Pos: " + activeProcess.arrPos);
             }
         }
 
-        // Method to calculate turn around time
-        public void FindTurnAroundTime(int[] processes,
-                   int n, int[] bt, int[] wt, int[] tat) {
-            // calculating turnaround time by adding
-            // bt[i] + wt[i]
-            for (int i = 0; i < n; i++)
-                tat[i] = bt[i] + wt[i];
+        public void RunBurstCycle() {
+            if (activeProcess == null) {
+                Console.WriteLine("No active process.");
+                return;
+            }
+            Console.WriteLine("RUNNING CPU, PROCESS" + activeProcess.processID + " : " + activeProcess.burst_times[activeProcess.ArrPos]);
+            activeProcess.RunBurst();
+            Tq--;
+            if (activeProcess.IsBurstComplete()) {
+                Console.WriteLine("\nProcess complete, transferring to IO queue.");
+                if (activeProcess.IsInFinalBurst()) {
+                    //Do NOT put it in IO queue, the process is done completely.
+                    Console.WriteLine("Transfer to IO queue aborted.");
+                    waitingQueue.Enqueue(activeProcess);
+                    activeProcess.CompleteTime = totalTime;
+                    Console.WriteLine("Process has finished final burst and has been placed into waiting queue.");
+                    //Console.WriteLine("Finished last burst at: " + totalTime);
+                } else {
+                    ioQueue.Add(activeProcess);
+                }
+                Tq = orgTq;
+                activeProcess = null;
+            } else if(Tq <= 0) {
+                Console.WriteLine("Process has not finished its burst in time and has been placed back into the ready queue.");
+                readyQueue.Enqueue(activeProcess);
+                activeProcess = null;
+                Tq = orgTq;
+            }
+            //Increment waiting time for processing not being used by the CPU.
+            //Waiting time for processes in its IO burst will NOT be incremented.
+            foreach (var process in readyQueue) {
+                process.waitTime++;
+            }
         }
 
-        // Method to calculate average time
-        public void FindavgTime(int[] processes, int n,
-                                 int[] bt, int quantum) {
-            int[] wt = new int[n];
-            int[] tat = new int[n];
-            int total_wt = 0, total_tat = 0;
-
-            // Function to find waiting time of
-            // all processes
-            FindWaitingTime(processes, n, bt, wt, quantum);
-
-            // Function to find turn around time
-            // for all processes
-            FindTurnAroundTime(processes, n, bt, wt, tat);
-
-            // Display processes along with
-            // all details
-            Console.WriteLine("Processes " + " Burst time " + " Waiting time " + " Turn around time");
-
-            // Calculate total waiting time and total turn
-            // around time
-            for (int i = 0; i < n; i++) {
-                total_wt = total_wt + wt[i];
-                total_tat = total_tat + tat[i];
-                Console.WriteLine(" " + (i + 1) + "\t\t" + bt[i] + "\t " + wt[i] + "\t\t " + tat[i]);
+        public void RunIOCycle() {
+            if (ioQueue.Count <= 0) return;
+            List<Process> processesToRemove = new List<Process>();
+            //Process processToRemove = null;
+            //Console.WriteLine("IO Time:" + ioQueue.Peek().io_times[ioQueue.Peek().ArrPos]);
+            foreach (Process process in ioQueue) {
+                Console.WriteLine("IO Time:" + process.io_times[process.ArrPos]);
+                process.RunIO();
+                if (process.IsIOComplete()) {
+                    process.ArrPos++;
+                    Console.WriteLine("IO Complete, moving to ready queue.");
+                    readyQueue.Enqueue(process);
+                    //ioQueue.Remove(process);
+                    processesToRemove.Add(process);
+                    //processToRemove = process;
+                }
             }
 
-            Console.WriteLine("Average waiting time = " + (float)total_wt / (float)n);
-            Console.Write("Average turn around time = " + (float)total_tat / (float)n);
+            foreach (var process in processesToRemove) {
+                ioQueue.Remove(process);
+            }
+
         }
     }
 }
