@@ -55,9 +55,15 @@ namespace Project1OS {
             } else return false;
         }
         public bool IsIOComplete() {
-            if (io_times[arrPos] == -1) {
+            try {
+                if (io_times[arrPos] == -1) {
+                    return true;
+                } else return false;
+            }
+            catch (Exception) {
+                Console.WriteLine("Array size has been exceeded.");
                 return true;
-            } else return false;
+            }
         }
         public bool IsIOTimesComplete() {
             if (arrPos >= io_times.Length-1) {
@@ -72,7 +78,13 @@ namespace Project1OS {
                 }
             }
             catch (Exception) {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Position exceeds burst time length.");
+                Console.WriteLine("Burst time length: " + burst_times.Length);
+                Console.WriteLine("Array position: " + arrPos);
+                Console.ResetColor();
+                throw;
             }
         }
         public void RunIO() {
@@ -81,9 +93,26 @@ namespace Project1OS {
                 if (io_times[arrPos] <= 0) {
                     io_times[arrPos] = -1;
                 }
+                if(arrPos == io_times.Length) {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("LINE MATCHES LENGTH");
+                    Console.ResetColor();
+                } else {
+                    Console.BackgroundColor = ConsoleColor.Blue;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("Line did not match : " + arrPos);
+                    Console.ResetColor();
+                }
             }
             catch (Exception) {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Position exceeds IO time length.");
+                Console.WriteLine("IO time length: " + io_times.Length);
+                Console.WriteLine("Array position: " + arrPos);
+                Console.ResetColor();
+                throw;
             }
 
         }
