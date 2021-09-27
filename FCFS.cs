@@ -60,7 +60,7 @@ namespace Project1OS {
         private void RunIOCycle() {
             if (ioQueue.Count <= 0) return;
             List<Process> processesToRemove = new List<Process>();
-            //Process processToRemove = null;
+
             //Console.WriteLine("IO Time:" + ioQueue.Peek().io_times[ioQueue.Peek().ArrPos]);
             foreach (Process process in ioQueue) {
                 Console.WriteLine("IO Time:" + process.io_times[process.ArrPos]);
@@ -69,9 +69,7 @@ namespace Project1OS {
                     process.ArrPos++;
                     Console.WriteLine("IO Complete, moving to ready queue.");
                     readyQueue.Enqueue(process);
-                    //ioQueue.Remove(process);
                     processesToRemove.Add(process);
-                    //processToRemove = process;
                 }
             }
 

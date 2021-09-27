@@ -15,18 +15,23 @@ namespace Project1OS {
         }
         private void SortProcesses() {
             //processSorter.Sort();
+ 
+            foreach (var proc in readyQueue) {
+                processSorter.Add(proc);
+            }
+            readyQueue.Clear();
+
             processSorter.Sort(delegate (Process c1, Process c2) { return c1.burst_times[c1.ArrPos].CompareTo(c2.burst_times[c2.ArrPos]); });
             foreach (var proc in processSorter) {
                 readyQueue.Enqueue(proc);
                 Console.WriteLine(proc.ArrPos + " : " + proc.burst_times[proc.ArrPos]);
             }
+            processSorter.Clear();
         }
         private void RunProcesses() {
 
             while (true) {
-                //if (readyQueue.Count <= 0 && activeProcess == null) {
-                //    break;
-                //}
+
                 SortProcesses();
                 totalTime++;
                 if (activeProcess == null) {
@@ -74,7 +79,7 @@ namespace Project1OS {
         private void RunIOCycle() {
             if (ioQueue.Count <= 0) return;
             List<Process> processesToRemove = new List<Process>();
-            //Process processToRemove = null;
+
             //Console.WriteLine("IO Time:" + ioQueue.Peek().io_times[ioQueue.Peek().ArrPos]);
             foreach (Process process in ioQueue) {
                 Console.WriteLine("IO Time:" + process.io_times[process.ArrPos]);
@@ -86,7 +91,6 @@ namespace Project1OS {
                     //readyQueue.Enqueue(process);
                     //ioQueue.Remove(process);
                     processesToRemove.Add(process);
-                    //processToRemove = process;
                 }
             }
 
