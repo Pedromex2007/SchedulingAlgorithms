@@ -52,21 +52,48 @@ namespace Project1OS {
             //firstcomefirstserve.BeginSequence();
 
             RR roundrobin = new RR(2);
-            roundrobin.AddProcess(p1objSmall);
-            roundrobin.AddProcess(p2objSmall);
-            roundrobin.AddProcess(p3objSmall);
+            //roundrobin.AddProcess(p1objSmall);
+            //roundrobin.AddProcess(p2objSmall);
+            //roundrobin.AddProcess(p3objSmall);
+
+            roundrobin.AddProcess(p1obj);
+            roundrobin.AddProcess(p2obj);
+            roundrobin.AddProcess(p3obj);
+            roundrobin.AddProcess(p4obj);
+            roundrobin.AddProcess(p5obj);
+            roundrobin.AddProcess(p6obj);
+            roundrobin.AddProcess(p7obj);
+            roundrobin.AddProcess(p8obj);
             //roundrobin.BeginSequence();
 
             SJF sjfSchedule = new SJF();
-            sjfSchedule.AddProcess(p1objSmall);
-            sjfSchedule.AddProcess(p2objSmall);
-            sjfSchedule.AddProcess(p3objSmall);
+            //sjfSchedule.AddProcess(p1objSmall);
+            //sjfSchedule.AddProcess(p2objSmall);
+            //sjfSchedule.AddProcess(p3objSmall);
+
+            sjfSchedule.AddProcess(p1obj);
+            sjfSchedule.AddProcess(p2obj);
+            sjfSchedule.AddProcess(p3obj);
+            sjfSchedule.AddProcess(p4obj);
+            sjfSchedule.AddProcess(p5obj);
+            sjfSchedule.AddProcess(p6obj);
+            sjfSchedule.AddProcess(p7obj);
+            sjfSchedule.AddProcess(p8obj);
             //sjfSchedule.BeginSequence();
 
             MLFQ mlfqSchedule = new MLFQ();
-            mlfqSchedule.AddProcess(p1objSmall);
-            mlfqSchedule.AddProcess(p2objSmall);
-            mlfqSchedule.AddProcess(p3objSmall);
+            //mlfqSchedule.AddProcess(p1objSmall);
+            //mlfqSchedule.AddProcess(p2objSmall);
+            //mlfqSchedule.AddProcess(p3objSmall);
+
+            mlfqSchedule.AddProcess(p1obj);
+            mlfqSchedule.AddProcess(p2obj);
+            mlfqSchedule.AddProcess(p3obj);
+            mlfqSchedule.AddProcess(p4obj);
+            mlfqSchedule.AddProcess(p5obj);
+            mlfqSchedule.AddProcess(p6obj);
+            mlfqSchedule.AddProcess(p7obj);
+            mlfqSchedule.AddProcess(p8obj);
             mlfqSchedule.BeginSequence();
         }
     }
