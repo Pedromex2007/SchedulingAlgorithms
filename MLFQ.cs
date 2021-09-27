@@ -60,6 +60,7 @@ namespace Project1OS {
             Console.WriteLine("Beginning Queue 2");
             Console.ResetColor();
             queue2.totalTime = queue1.totalTime;
+            queue2.timeWithoutProcess = queue1.timeWithoutProcess;
             queue2.BeginSequence();
 
             foreach (var proc in queue2.transferList) {
@@ -70,8 +71,25 @@ namespace Project1OS {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Beginning Queue 3");
             Console.ResetColor();
+
             queue3.totalTime = queue2.totalTime;
+            queue3.timeWithoutProcess = queue2.timeWithoutProcess;
             queue3.BeginSequence();
+
+            foreach (var proc in queue1.waitingQueue) {
+                this.waitingQueue.Enqueue(proc);
+            }
+            foreach (var proc in queue2.waitingQueue) {
+                this.waitingQueue.Enqueue(proc);
+            }
+            foreach (var proc in queue3.waitingQueue) {
+                this.waitingQueue.Enqueue(proc);
+            }
+
+            this.totalTime = queue3.totalTime;
+            this.timeWithoutProcess = queue3.timeWithoutProcess;
+
+            CalculateTimes();
         }
     }
 }

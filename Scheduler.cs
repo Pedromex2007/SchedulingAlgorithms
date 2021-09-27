@@ -5,14 +5,19 @@ using System.Text;
 namespace Project1OS {
     abstract class Scheduler {
         protected Process activeProcess;
+        public int timeWithoutProcess = 0;
         public int totalTime = 0;
 
         protected Queue<Process> readyQueue = new Queue<Process>();
-        protected Queue<Process> waitingQueue = new Queue<Process>();
         protected List<Process> ioQueue = new List<Process>();
 
+
+        public Queue<Process> waitingQueue = new Queue<Process>(); //Processes that completed their bursts entirely.
         public List<Process> transferList = new List<Process>();
 
+        /// <summary>
+        /// Begin a scheduler's simulation. This will print the waiting time, turn around time, and receive time.
+        /// </summary>
         abstract public void BeginSequence();
 
         /// <summary>
@@ -24,7 +29,12 @@ namespace Project1OS {
             readyQueue.Enqueue(process);
         }
 
-        public void CalculateTimes() {
+
+        protected void CalculateTimes() {
+            float CPUUtil = (float)timeWithoutProcess / totalTime;
+            CPUUtil = 1 - CPUUtil;
+            Console.WriteLine("CPU Utilization: " + CPUUtil);
+
             Console.WriteLine("Tr times");
             foreach (var process in waitingQueue) {
                 Console.WriteLine(process.processID + " : " + process.turnAroundTime);

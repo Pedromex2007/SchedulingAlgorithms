@@ -34,6 +34,7 @@ namespace Project1OS {
         private void RunBurstCycle() {
             if (activeProcess == null) {
                 Console.WriteLine("No active process.");
+                timeWithoutProcess++;
                 return;
             }
             Console.WriteLine("RUNNING CPU, PROCESS" + activeProcess.processID + " : " + activeProcess.burst_times[activeProcess.ArrPos]);

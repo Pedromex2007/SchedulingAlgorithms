@@ -6,6 +6,7 @@ namespace Project1OS {
     class RR : Scheduler {
         readonly int orgTq;
         public bool MLFQUsed = false;
+
         int Tq { get; set;}
         public RR(int timeQuantum) {
             Tq = timeQuantum;
@@ -38,6 +39,7 @@ namespace Project1OS {
         private void RunBurstCycle() {
             if (activeProcess == null) {
                 Console.WriteLine("No active process.");
+                timeWithoutProcess++;
                 return;
             }
             Console.WriteLine("RUNNING CPU, PROCESS" + activeProcess.processID + " : " + activeProcess.burst_times[activeProcess.ArrPos]);
@@ -102,6 +104,11 @@ namespace Project1OS {
             }
 
         }
+
+        /// <summary>
+        /// If the process is not complete when the Tq expires, rank will increase, removed from this queue, and then placed into a temp list.
+        /// </summary>
+        /// <param name="processToMove">Process to move down a queue.</param>
         void OnTqExpire(Process processToMove) {
             processToMove.rank++;
             transferList.Add(processToMove);
