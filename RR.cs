@@ -4,14 +4,15 @@ using System.Text;
 
 namespace Project1OS {
     class RR : Scheduler {
-        int orgTq;
+        readonly int orgTq;
+        public bool MLFQUsed = false;
         int Tq { get; set;}
         public RR(int timeQuantum) {
             Tq = timeQuantum;
             orgTq = timeQuantum;
         }
 
-        public void BeginSequence() {
+        public override void BeginSequence() {
             RunProcesses();
             CalculateTimes();
         }
@@ -34,7 +35,7 @@ namespace Project1OS {
             }
         }
 
-        public void RunBurstCycle() {
+        private void RunBurstCycle() {
             if (activeProcess == null) {
                 Console.WriteLine("No active process.");
                 return;
@@ -58,18 +59,27 @@ namespace Project1OS {
                 activeProcess = null;
             } else if(Tq <= 0) {
                 Console.WriteLine("Process has not finished its burst in time and has been placed back into the ready queue.");
-                readyQueue.Enqueue(activeProcess);
-                activeProcess = null;
+                if(!MLFQUsed) {
+                    readyQueue.Enqueue(activeProcess);
+                } else {
+                    //Activate event.
+                    Console.WriteLine("ABORTING TRANSFER TO READY QUEUE: This process will be placed into the transferQueue instead.");
+                    OnTqExpire(activeProcess);
+                }
                 Tq = orgTq;
+                activeProcess = null;
             }
             //Increment waiting time for processing not being used by the CPU.
             //Waiting time for processes in its IO burst will NOT be incremented.
             foreach (var process in readyQueue) {
                 process.waitTime++;
             }
+            foreach (var process in transferList) {
+                process.waitTime++;
+            }
         }
 
-        public void RunIOCycle() {
+        private void RunIOCycle() {
             if (ioQueue.Count <= 0) return;
             List<Process> processesToRemove = new List<Process>();
             //Process processToRemove = null;
@@ -91,6 +101,10 @@ namespace Project1OS {
                 ioQueue.Remove(process);
             }
 
+        }
+        void OnTqExpire(Process processToMove) {
+            processToMove.rank++;
+            transferList.Add(processToMove);
         }
     }
 }

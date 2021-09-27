@@ -4,11 +4,12 @@ using System.Text;
 
 namespace Project1OS {
     class FCFS : Scheduler {
-        public void BeginSequence() {
+        public bool MLFQUsed = false;
+        public override void BeginSequence() {
             RunProcesses();
             CalculateTimes();
         }
-        private void RunProcesses() {
+        public void RunProcesses() {
 
             while (true) {
                 //if (readyQueue.Count <= 0 && activeProcess == null) {

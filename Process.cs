@@ -7,6 +7,7 @@ namespace Project1OS {
         public int processID;
         public int arrivalTime = 0;
         public int waitTime = 0;
+        public int rank = 1; //Used for the MLFQ to identify which queue it should go into.
         private int completeTime;
         /// <summary>
         /// Sets complete time. Since arrival time is always zero, turn around time for this process will always be equal to completion time.

@@ -5,7 +5,7 @@ using System.Text;
 namespace Project1OS {
     class SJF: Scheduler {
         List<Process> processSorter = new List<Process>();
-        public void BeginSequence() {
+        public override void BeginSequence() {
             SortProcesses();
             RunProcesses();
             CalculateTimes();

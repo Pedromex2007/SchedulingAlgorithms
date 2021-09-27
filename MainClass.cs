@@ -6,7 +6,7 @@ namespace Project1OS {
 
             int[] p1burstsSmall = { 6, 4 };
             int[] p1ioSmall = { 10 };
-            int[] p2burstsSmall = { 9, 6 };
+            int[] p2burstsSmall = { 12, 6 };
             int[] p2ioSmall = { 15 };
             int[] p3burstsSmall = { 3, 2 };
             int[] p3ioSmall = { 5 };
@@ -61,7 +61,13 @@ namespace Project1OS {
             sjfSchedule.AddProcess(p1objSmall);
             sjfSchedule.AddProcess(p2objSmall);
             sjfSchedule.AddProcess(p3objSmall);
-            sjfSchedule.BeginSequence();
+            //sjfSchedule.BeginSequence();
+
+            MLFQ mlfqSchedule = new MLFQ();
+            mlfqSchedule.AddProcess(p1objSmall);
+            mlfqSchedule.AddProcess(p2objSmall);
+            mlfqSchedule.AddProcess(p3objSmall);
+            mlfqSchedule.BeginSequence();
         }
     }
 }
