@@ -6,15 +6,28 @@ namespace Project1OS {
     class SJF: Scheduler {
         List<Process> processSorter = new List<Process>();
         public void BeginSequence() {
+            SortProcesses();
             RunProcesses();
             CalculateTimes();
         }
-        public void RunProcesses() {
+        public override void AddProcess(Process process) {
+            processSorter.Add(process);
+        }
+        private void SortProcesses() {
+            //processSorter.Sort();
+            processSorter.Sort(delegate (Process c1, Process c2) { return c1.burst_times[c1.ArrPos].CompareTo(c2.burst_times[c2.ArrPos]); });
+            foreach (var proc in processSorter) {
+                readyQueue.Enqueue(proc);
+                Console.WriteLine(proc.ArrPos + " : " + proc.burst_times[proc.ArrPos]);
+            }
+        }
+        private void RunProcesses() {
 
             while (true) {
                 //if (readyQueue.Count <= 0 && activeProcess == null) {
                 //    break;
                 //}
+                SortProcesses();
                 totalTime++;
                 if (activeProcess == null) {
                     if (readyQueue.Count > 0) {
@@ -31,7 +44,7 @@ namespace Project1OS {
             }
         }
 
-        public void RunBurstCycle() {
+        private void RunBurstCycle() {
             if (activeProcess == null) {
                 Console.WriteLine("No active process.");
                 return;
@@ -58,7 +71,7 @@ namespace Project1OS {
             }
         }
 
-        public void RunIOCycle() {
+        private void RunIOCycle() {
             if (ioQueue.Count <= 0) return;
             List<Process> processesToRemove = new List<Process>();
             //Process processToRemove = null;
@@ -68,8 +81,9 @@ namespace Project1OS {
                 process.RunIO();
                 if (process.IsIOComplete()) {
                     process.ArrPos++;
-                    Console.WriteLine("IO Complete, moving to ready queue.");
-                    readyQueue.Enqueue(process);
+                    Console.WriteLine("IO Complete, moving to temporary list to sort.");
+                    AddProcess(process);
+                    //readyQueue.Enqueue(process);
                     //ioQueue.Remove(process);
                     processesToRemove.Add(process);
                     //processToRemove = process;
@@ -79,13 +93,6 @@ namespace Project1OS {
             foreach (var process in processesToRemove) {
                 ioQueue.Remove(process);
             }
-            //if(processToRemove != null) ioQueue.Remove(processToRemove);
-            /*ioQueue.Peek().RunIO();
-            if(ioQueue.Peek().IsIOComplete()) {
-                ioQueue.Peek().ArrPos++;
-                Console.WriteLine("IO Complete, moving to ready queue.");
-                readyQueue.Enqueue(ioQueue.Dequeue());
-            }*/
         }
     }
 }

@@ -55,7 +55,13 @@ namespace Project1OS {
             roundrobin.AddProcess(p1objSmall);
             roundrobin.AddProcess(p2objSmall);
             roundrobin.AddProcess(p3objSmall);
-            roundrobin.BeginSequence();
+            //roundrobin.BeginSequence();
+
+            SJF sjfSchedule = new SJF();
+            sjfSchedule.AddProcess(p1objSmall);
+            sjfSchedule.AddProcess(p2objSmall);
+            sjfSchedule.AddProcess(p3objSmall);
+            sjfSchedule.BeginSequence();
         }
     }
 }

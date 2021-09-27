@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Project1OS {
-    abstract class Scheduler {
+    class Scheduler {
         protected Process activeProcess;
         protected int totalTime = 0;
 
@@ -11,7 +11,7 @@ namespace Project1OS {
         protected Queue<Process> waitingQueue = new Queue<Process>();
         protected List<Process> ioQueue = new List<Process>();
 
-        public void AddProcess(Process process) {
+        public virtual void AddProcess(Process process) {
             readyQueue.Enqueue(process);
         }
 

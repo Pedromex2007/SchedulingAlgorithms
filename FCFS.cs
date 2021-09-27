@@ -8,7 +8,7 @@ namespace Project1OS {
             RunProcesses();
             CalculateTimes();
         }
-        public void RunProcesses() {
+        private void RunProcesses() {
 
             while (true) {
                 //if (readyQueue.Count <= 0 && activeProcess == null) {
@@ -30,7 +30,7 @@ namespace Project1OS {
             }
         }
 
-        public void RunBurstCycle() {
+        private void RunBurstCycle() {
             if (activeProcess == null) {
                 Console.WriteLine("No active process.");
                 return;
@@ -57,7 +57,7 @@ namespace Project1OS {
             }
         }
 
-        public void RunIOCycle() {
+        private void RunIOCycle() {
             if (ioQueue.Count <= 0) return;
             List<Process> processesToRemove = new List<Process>();
             //Process processToRemove = null;
