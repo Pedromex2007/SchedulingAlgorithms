@@ -41,8 +41,8 @@ namespace Project1OS {
             }
             Console.WriteLine("Wt times");
             foreach (var process in waitingQueue) {
-                process.waitTime--;
-                Console.WriteLine(process.processID + " : " + process.waitTime);
+                //process.waitTime--;
+                Console.WriteLine(process.processID + " : " + process.WaitTime);
             }
         }
 

@@ -49,7 +49,7 @@ namespace Project1OS {
             firstcomefirstserve.AddProcess(p6obj);
             firstcomefirstserve.AddProcess(p7obj);
             firstcomefirstserve.AddProcess(p8obj);
-            //firstcomefirstserve.BeginSequence();
+            firstcomefirstserve.BeginSequence();
 
             RR roundrobin = new RR(2);
             //roundrobin.AddProcess(p1objSmall);
@@ -94,7 +94,7 @@ namespace Project1OS {
             mlfqSchedule.AddProcess(p6obj);
             mlfqSchedule.AddProcess(p7obj);
             mlfqSchedule.AddProcess(p8obj);
-            mlfqSchedule.BeginSequence();
+            //mlfqSchedule.BeginSequence();
         }
     }
 }

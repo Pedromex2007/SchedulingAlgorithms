@@ -6,7 +6,18 @@ namespace Project1OS {
     class Process {
         public int processID;
         public int arrivalTime = 0;
-        public int waitTime = 0;
+
+        private int totalIOandBurst = 0;
+        private int waitTime = 0;
+
+        //Correct wait time will be received upon being called for.
+        public int WaitTime {
+            get {
+                waitTime = turnAroundTime - totalIOandBurst;
+                return waitTime;
+            }
+        }
+
         public int rank = 1; //Used for the MLFQ to identify which queue it should go into.
         private int completeTime;
         /// <summary>
@@ -43,6 +54,13 @@ namespace Project1OS {
             processID = id;
             burst_times = bursts;
             io_times = ios;
+
+            foreach (var item in burst_times) {
+                totalIOandBurst += item;
+            }
+            foreach (var item in io_times) {
+                totalIOandBurst += item;
+            }
         }
         public bool IsInFinalBurst() {
             Console.WriteLine("Final burst is: " + burst_times[burst_times.Length-1]);

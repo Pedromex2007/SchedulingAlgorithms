@@ -70,11 +70,6 @@ namespace Project1OS {
                 }
                 activeProcess = null;
             }
-            //Increment waiting time for processing not being used by the CPU.
-            //Waiting time for processes in its IO burst will NOT be incremented.
-            foreach (var process in readyQueue) {
-                process.waitTime++;
-            }
         }
 
         private void RunIOCycle() {
