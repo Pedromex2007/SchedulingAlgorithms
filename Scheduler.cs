@@ -13,7 +13,7 @@ namespace Project1OS {
 
 
         public Queue<Process> waitingQueue = new Queue<Process>(); //Processes that completed their bursts entirely.
-        public List<Process> transferList = new List<Process>();
+        public List<Process> transferList = new List<Process>(); //Processes that will be transferred to another scheduler. (used for MLQ)
 
         /// <summary>
         /// Begin a scheduler's simulation. This will print the waiting time, turn around time, and receive time.
