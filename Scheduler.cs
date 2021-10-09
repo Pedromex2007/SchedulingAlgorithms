@@ -6,7 +6,7 @@ namespace Project1OS {
     abstract class Scheduler {
         protected Process activeProcess;
         public int timeWithoutProcess = 0;
-        public int totalTime = 0;
+        public int TotalTime { get; set; }
 
         protected Queue<Process> readyQueue = new Queue<Process>();
         protected List<Process> ioQueue = new List<Process>();
@@ -31,19 +31,36 @@ namespace Project1OS {
 
 
         protected void CalculateTimes() {
-            float CPUUtil = (float)timeWithoutProcess / totalTime;
+            float CPUUtil = (float)timeWithoutProcess / TotalTime;
             CPUUtil = 1 - CPUUtil;
+            float TtrAvg = 0;
+            float WtAvg = 0;
+            float TrAvg = 0;
             Console.WriteLine("CPU Utilization: " + CPUUtil);
 
-            Console.WriteLine("Tr times");
+            Console.WriteLine("Ttr times");
             foreach (var process in waitingQueue) {
                 Console.WriteLine(process.processID + " : " + process.turnAroundTime);
+                TtrAvg += process.turnAroundTime;
+
             }
             Console.WriteLine("Wt times");
             foreach (var process in waitingQueue) {
-                //process.waitTime--;
                 Console.WriteLine(process.processID + " : " + process.WaitTime);
+                WtAvg += process.WaitTime;
             }
+            Console.WriteLine("Tr times");
+            foreach (var process in waitingQueue) {
+                process.ResponseTime--;
+                Console.WriteLine(process.processID + " : " + process.ResponseTime);
+                TrAvg += process.ResponseTime;
+            }
+
+            Console.WriteLine("Avg Ttr time: " + TtrAvg / waitingQueue.Count);
+
+            Console.WriteLine("Avg Wt times: " + WtAvg / waitingQueue.Count);
+
+            Console.WriteLine("Avg Tr times: " + TrAvg / waitingQueue.Count);
         }
 
     }

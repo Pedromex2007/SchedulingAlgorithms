@@ -59,7 +59,7 @@ namespace Project1OS {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Beginning Queue 2");
             Console.ResetColor();
-            queue2.totalTime = queue1.totalTime;
+            queue2.TotalTime = queue1.TotalTime;
             queue2.timeWithoutProcess = queue1.timeWithoutProcess;
             queue2.BeginSequence();
 
@@ -72,7 +72,7 @@ namespace Project1OS {
             Console.WriteLine("Beginning Queue 3");
             Console.ResetColor();
 
-            queue3.totalTime = queue2.totalTime;
+            queue3.TotalTime = queue2.TotalTime;
             queue3.timeWithoutProcess = queue2.timeWithoutProcess;
             queue3.BeginSequence();
 
@@ -86,7 +86,7 @@ namespace Project1OS {
                 this.waitingQueue.Enqueue(proc);
             }
 
-            this.totalTime = queue3.totalTime;
+            this.TotalTime = queue3.TotalTime;
             this.timeWithoutProcess = queue3.timeWithoutProcess;
 
             CalculateTimes();

@@ -33,7 +33,7 @@ namespace Project1OS {
             while (true) {
 
                 SortProcesses();
-                totalTime++;
+                TotalTime++;
                 if (activeProcess == null) {
                     if (readyQueue.Count > 0) {
                         activeProcess = readyQueue.Dequeue();
@@ -44,7 +44,7 @@ namespace Project1OS {
                 }
                 RunBurstCycle();
                 RunIOCycle();
-                Console.WriteLine("Total time: " + totalTime);
+                Console.WriteLine("Total time: " + TotalTime);
                 //Console.WriteLine("Current Pos: " + activeProcess.arrPos);
             }
         }
@@ -55,6 +55,10 @@ namespace Project1OS {
                 timeWithoutProcess++;
                 return;
             }
+            if (activeProcess.firstBurst) {
+                activeProcess.ResponseTime = TotalTime;
+                activeProcess.firstBurst = false;
+            }
             Console.WriteLine("RUNNING CPU, PROCESS" + activeProcess.processID + " : " + activeProcess.burst_times[activeProcess.ArrPos]);
             activeProcess.RunBurst();
             if (activeProcess.IsBurstComplete()) {
@@ -62,7 +66,7 @@ namespace Project1OS {
                 if (activeProcess.IsInFinalBurst()) {
                     //Do NOT put it in IO queue, the process is done completely.
                     waitingQueue.Enqueue(activeProcess);
-                    activeProcess.CompleteTime = totalTime;
+                    activeProcess.CompleteTime = TotalTime;
                     Console.WriteLine("Process has finished final burst and has been placed into waiting queue.");
                     //Console.WriteLine("Finished last burst at: " + totalTime);
                 } else {

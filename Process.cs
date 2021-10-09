@@ -5,10 +5,12 @@ using System.Text;
 namespace Project1OS {
     class Process {
         public int processID;
-        public int arrivalTime = 0;
+        //public int arrivalTime = 0;
 
         private int totalIOandBurst = 0;
         private int waitTime = 0;
+
+        public bool firstBurst = true;
 
         //Correct wait time will be received upon being called for.
         public int WaitTime {
@@ -32,10 +34,14 @@ namespace Project1OS {
                 turnAroundTime = completeTime;
             }
         }
+        public int ResponseTime { get; set; }
         public int turnAroundTime = 0;
 
         private int arrPos = 0;
 
+        /// <summary>
+        /// Getter/setter to the current position this process is in.
+        /// </summary>
         public int ArrPos { 
             get {
                 return arrPos;
