@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Project1OS {
     class SJF: Scheduler {
-        List<Process> processSorter = new List<Process>();
+        readonly List<Process> processSorter = new List<Process>();
         public override void BeginSequence() {
             SortProcesses();
             RunProcesses();
@@ -13,6 +13,9 @@ namespace Project1OS {
         public override void AddProcess(Process process) {
             processSorter.Add(process);
         }
+        /// <summary>
+        /// Sort the list of processes in accordance to the shortest bursts being first.
+        /// </summary>
         private void SortProcesses() {
             //processSorter.Sort();
  

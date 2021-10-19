@@ -4,13 +4,7 @@ namespace Project1OS {
     static class MainClass {
         public static void Main(String[] args) {
 
-            int[] p1burstsSmall = { 6, 4 };
-            int[] p1ioSmall = { 10 };
-            int[] p2burstsSmall = { 12, 6 };
-            int[] p2ioSmall = { 15 };
-            int[] p3burstsSmall = { 3, 2 };
-            int[] p3ioSmall = { 5 };
-
+            //The processes we're using.
             int[] p1bursts = { 5, 3, 5, 4, 6, 4, 3, 5 };
             int[] p1io = { 27, 31, 43, 18, 22, 26, 24 };
             int[] p2bursts = { 4, 5, 7, 12, 9, 4, 9, 7, 8 };
@@ -27,10 +21,8 @@ namespace Project1OS {
             int[] p7io = {  46, 41, 42, 21, 32, 19, 33 };
             int[] p8bursts = { 4, 5, 6, 14, 16, 6 };
             int[] p8io = { 14, 33, 51, 73, 87 };
-            Process p1objSmall = new Process(1, p1burstsSmall, p1ioSmall);
-            Process p2objSmall = new Process(2, p2burstsSmall, p2ioSmall);
-            Process p3objSmall = new Process(3, p3burstsSmall, p3ioSmall);
 
+            //Create a new processes with these bursts.
             Process p1obj = new Process(1, p1bursts, p1io);
             Process p2obj = new Process(2, p2bursts, p2io);
             Process p3obj = new Process(3, p3bursts, p3io);

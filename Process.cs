@@ -7,7 +7,7 @@ namespace Project1OS {
         public int processID;
         //public int arrivalTime = 0;
 
-        private int totalIOandBurst = 0;
+        private readonly int totalIOandBurst = 0;
         private int waitTime = 0;
 
         public bool firstBurst = true;
@@ -56,6 +56,13 @@ namespace Project1OS {
 
         public int[] burst_times;
         public int[] io_times;
+
+        /// <summary>
+        /// Process constructor. Sets all the nesscary parameter upon instantiation.
+        /// </summary>
+        /// <param name="id">The ID of this process. Two processes should NOT share the same ID.</param>
+        /// <param name="bursts">Array of bursts this process has.</param>
+        /// <param name="ios">Array of IOs this process has.</param>
         public Process(int id, int[] bursts, int[] ios) {
             processID = id;
             burst_times = bursts;
@@ -68,12 +75,20 @@ namespace Project1OS {
                 totalIOandBurst += item;
             }
         }
+        /// <summary>
+        /// Check if this process is on its final burst in the array.
+        /// </summary>
+        /// <returns></returns>
         public bool IsInFinalBurst() {
             Console.WriteLine("Final burst is: " + burst_times[burst_times.Length-1]);
             if (arrPos >= burst_times.Length-1) {
                 return true;
             } else return false;
         }
+        /// <summary>
+        /// Check to see if this process has completed a burst.
+        /// </summary>
+        /// <returns></returns>
         public bool IsBurstComplete() {
             if (burst_times[arrPos] == -1) {
                 return true;
@@ -93,11 +108,18 @@ namespace Project1OS {
                 return true;
             }
         }
+        /// <summary>
+        /// Check if IO burst is complete.
+        /// </summary>
+        /// <returns></returns>
         public bool IsIOTimesComplete() {
             if (arrPos >= io_times.Length-1) {
                 return true;
             } else return false;
         }
+        /// <summary>
+        /// Run a single burst.
+        /// </summary>
         public void RunBurst() {
             try {
                 burst_times[arrPos]--;
@@ -115,6 +137,9 @@ namespace Project1OS {
                 throw;
             }
         }
+        /// <summary>
+        /// Run a single IO burst.
+        /// </summary>
         public void RunIO() {
             try {
                 io_times[arrPos]--;

@@ -30,7 +30,9 @@ namespace Project1OS {
             }
             
         }
-
+        /// <summary>
+        /// Begin a CPU burst cycle.
+        /// </summary>
         private void RunBurstCycle() {
             if (activeProcess == null) {
                 Console.WriteLine("No active process.");
@@ -57,7 +59,9 @@ namespace Project1OS {
                 activeProcess = null;
             }
         }
-
+        /// <summary>
+        /// Begin an IO burst cycle.
+        /// </summary>
         private void RunIOCycle() {
             if (ioQueue.Count <= 0) return;
             List<Process> processesToRemove = new List<Process>();
@@ -77,13 +81,6 @@ namespace Project1OS {
             foreach (var process in processesToRemove) {
                 ioQueue.Remove(process);
             }
-            //if(processToRemove != null) ioQueue.Remove(processToRemove);
-            /*ioQueue.Peek().RunIO();
-            if(ioQueue.Peek().IsIOComplete()) {
-                ioQueue.Peek().ArrPos++;
-                Console.WriteLine("IO Complete, moving to ready queue.");
-                readyQueue.Enqueue(ioQueue.Dequeue());
-            }*/
         }
     }
 }

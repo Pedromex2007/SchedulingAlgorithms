@@ -29,7 +29,9 @@ namespace Project1OS {
             readyQueue.Enqueue(process);
         }
 
-
+        /// <summary>
+        /// Print the Wt, Tr, and Ttr times for each process, along with the average and CPU utilization for scheduler.
+        /// </summary>
         protected void CalculateTimes() {
             float CPUUtil = (float)timeWithoutProcess / TotalTime;
             CPUUtil = 1 - CPUUtil;
@@ -52,6 +54,7 @@ namespace Project1OS {
             Console.WriteLine("Tr times");
             foreach (var process in waitingQueue) {
                 process.ResponseTime--;
+                if (process.ResponseTime < 0) process.ResponseTime = 0;
                 Console.WriteLine(process.processID + " : " + process.ResponseTime);
                 TrAvg += process.ResponseTime;
             }
