@@ -4,11 +4,13 @@ using System.Text;
 
 namespace Project1OS {
     class MLFQ : Scheduler {
+        //These are our queues that we will use.
         readonly RR queue1 = new RR(5);
         readonly RR queue2 = new RR(10);
         readonly FCFS queue3 = new FCFS();
 
         public MLFQ() {
+            //Tell these schedulers that they're apart of a greater MLFQ.
             queue1.MLFQUsed = true;
             queue2.MLFQUsed = true;
             queue3.MLFQUsed = true;
@@ -43,7 +45,10 @@ namespace Project1OS {
                     break;
             }
         }
-
+        /// <summary>
+        /// Begin the simulation proper and activate each process.
+        /// The MLFQ will go through each scheduler it has.
+        /// </summary>
         public void RunProcesses() {
             Console.BackgroundColor = ConsoleColor.Red;
             Console.ForegroundColor = ConsoleColor.White;

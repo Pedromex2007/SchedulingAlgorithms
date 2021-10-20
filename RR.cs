@@ -8,7 +8,14 @@ namespace Project1OS {
         readonly int orgTq;
         public bool MLFQUsed = false;
 
+        /// <summary>
+        /// The RR's time quantum.
+        /// </summary>
         int Tq { get; set;}
+        /// <summary>
+        /// RR constructor, TQ is set here.
+        /// </summary>
+        /// <param name="timeQuantum">The TQ this RR scheduler will have.</param>
         public RR(int timeQuantum) {
             Tq = timeQuantum;
             orgTq = timeQuantum;

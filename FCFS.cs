@@ -9,6 +9,9 @@ namespace Project1OS {
             RunProcesses();
             CalculateTimes();
         }
+        /// <summary>
+        /// Begin the simulation proper and activate each process.
+        /// </summary>
         public void RunProcesses() {
             while (true) {
                 //if (readyQueue.Count <= 0 && activeProcess == null) {

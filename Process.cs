@@ -54,6 +54,7 @@ namespace Project1OS {
             }
         }
 
+        //Our burst and IO times.
         public int[] burst_times;
         public int[] io_times;
 
@@ -94,6 +95,10 @@ namespace Project1OS {
                 return true;
             } else return false;
         }
+        /// <summary>
+        /// Check to see if this process has completed its active IO burst.
+        /// </summary>
+        /// <returns></returns>
         public bool IsIOComplete() {
             try {
                 if (io_times[arrPos] == -1) {
@@ -108,15 +113,7 @@ namespace Project1OS {
                 return true;
             }
         }
-        /// <summary>
-        /// Check if IO burst is complete.
-        /// </summary>
-        /// <returns></returns>
-        public bool IsIOTimesComplete() {
-            if (arrPos >= io_times.Length-1) {
-                return true;
-            } else return false;
-        }
+
         /// <summary>
         /// Run a single burst.
         /// </summary>

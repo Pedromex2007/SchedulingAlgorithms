@@ -31,6 +31,9 @@ namespace Project1OS {
             }
             processSorter.Clear();
         }
+        /// <summary>
+        /// Begin the simulation proper and activate each process.
+        /// </summary>
         private void RunProcesses() {
 
             while (true) {
